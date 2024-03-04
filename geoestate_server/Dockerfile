@@ -53,34 +53,57 @@
 
 
 # Use the Dart image as the build stage
+# FROM dart:2.19.0 AS build
+
+# # Resolve app dependencies.
+# WORKDIR /app
+# COPY . .
+
+# RUN dart pub get
+
+# # Copy app source code and AOT compile it.
+# RUN dart compile exe bin/main.dart -o bin/main
+
+# # If you update the busybox version, make sure the image is
+# # compatible with the dart image.
+# FROM busybox:1.36.1-glibc
+
+# ENV runmode=development
+# ENV serverid=default
+# ENV logging=normal
+# ENV role=monolith
+
+# WORKDIR /app
+
+# COPY --from=build /app/bin/main /app/bin/main
+# COPY --from=build /app/config/ config/
+# COPY --from=build /app/web/ web/
+
+# EXPOSE 8080
+# EXPOSE 8081
+# EXPOSE 8082
+
+# CMD /bin/bash -c "app/bin/main --mode $runmode --server-id $serverid --logging $logging --role $role"
+
 FROM dart:2.19.0 AS build
 
 # Resolve app dependencies.
 WORKDIR /app
-COPY . .
+COPY pubspec.* ./
+COPY lib /app
+COPY config /app
+COPY bin /app
 
 RUN dart pub get
 
 # Copy app source code and AOT compile it.
-RUN dart compile exe bin/main.dart -o bin/main
+COPY . .
+# Ensure packages are still up-to-date if anything has changed
+RUN dart pub get --offline
 
-# If you update the busybox version, make sure the image is
-# compatible with the dart image.
-FROM busybox:1.36.1-glibc
-
-ENV runmode=development
-ENV serverid=default
-ENV logging=normal
-ENV role=monolith
-
-WORKDIR /app
-
-COPY --from=build /app/bin/main /app/bin/main
-COPY --from=build /app/config/ config/
-COPY --from=build /app/web/ web/
-
+# Start server.
 EXPOSE 8080
 EXPOSE 8081
 EXPOSE 8082
-
-CMD /bin/bash -c "app/bin/main --mode $runmode --server-id $serverid --logging $logging --role $role"
+#CMD ["/app/bin/server"]
+CMD /bin/bash -c "dart bin/main.dart --mode production"
