@@ -1,0 +1,10 @@
+class: Marker
+table: marker
+fields:
+  markerId: String
+  latitude: double
+  longitude: double
+  marketRate: int
+  unit: String
+  color: String
+  createdAt: DateTime

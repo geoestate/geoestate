@@ -1,0 +1,22 @@
+class: Dataset
+table: dataset
+fields:
+  refNo: String
+  datasetName: String
+  bankName: String
+  branchName: String
+  partyName: String
+  colonyName: String
+  cityVillageName: String
+  latitude: double
+  longitude: double
+  marketRate: int
+  unit: String
+  dateOfValuation: DateTime
+  entryBy: String
+  createdAt: DateTime
+  remarks: String
+  colorMark: String
+  dateOfVisit: DateTime
+  billId: String
+  datasetId: String

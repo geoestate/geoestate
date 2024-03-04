@@ -1,0 +1,15 @@
+banks:
+  - getAllBanks:
+  - createBank:
+  - deleteBank:
+datasets:
+  - getAllDatasets:
+  - createDataset:
+  - updateDataset:
+  - deleteDataset:
+example:
+  - hello:
+markers:
+  - getAllMarkers:
+  - createMarker:
+  - deleteMarker:

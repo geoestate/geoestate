@@ -1,0 +1,6 @@
+class: Bank
+table: bank
+fields:
+  bankName: String
+  branchName: String
+  ifscCode: String
