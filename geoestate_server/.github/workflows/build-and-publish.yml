@@ -45,5 +45,5 @@ jobs:
           context: .
           push: true
           tags:
-            ghcr.io/adityapandeyz/serverpod-vps-server:latest
+            ghcr.io/GeoEstate/serverpod-vps-server:latest
           labels: ${{ steps.meta.outputs.labels }}
